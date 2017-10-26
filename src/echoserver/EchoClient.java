@@ -5,39 +5,35 @@ import java.io.*;
 
 public class EchoClient {
 	public static void main(String [] args){
-		
-//		System.out.println("Enter in stuff, type 'Exit' to close.");
 		try {
-			//send to server
 			int send;
 			int inChar;
 			
-			String hostname = "Mylar";
+			String hostname = "localhost";
 			Socket socket = new Socket (hostname, 6013);
+			
 			//output stream
-			//OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
 			OutputStream out = socket.getOutputStream();
 			
 			//input stream set up
-			//InputStreamReader reader = new InputStreamReader(socket.getInputStream());
 			InputStream reader = socket.getInputStream();
 			
+			/*
+			 * Runs while there is still bytes to be read
+			 * Writes the given byte, then receives it back from the server and writes to standard out
+			 */
 			while((send = System.in.read()) != -1){
-				//System.err.print(".");
-				//System.out.print((char) send);
 				out.write(send);
-				
-				
-				
 				inChar = reader.read();
 				System.out.write((char) inChar);
 			}
+			
 			out.flush();
 			System.out.flush();
 			socket.close();
 			
 		} catch (IOException ioe) {
-			System.out.println("You gave us an error, nerd.");
+			System.out.println("There has been an error: ");
 			System.out.println(ioe);
 		}
 	}
