@@ -12,24 +12,28 @@ public class EchoClient {
 			int send;
 			int inChar;
 			
-			String hostname = "BEBOP";
+			String hostname = "Mylar";
 			Socket socket = new Socket (hostname, 6013);
 			//output stream
-			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
+			//OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
+			OutputStream out = socket.getOutputStream();
+			
 			//input stream set up
-			InputStreamReader reader = new InputStreamReader(socket.getInputStream());
+			//InputStreamReader reader = new InputStreamReader(socket.getInputStream());
+			InputStream reader = socket.getInputStream();
 			
 			while((send = System.in.read()) != -1){
+				//System.err.print(".");
 				//System.out.print((char) send);
 				out.write(send);
 				
-				out.flush();
+				
 				
 				inChar = reader.read();
-				System.out.print((char) inChar);
+				System.out.write((char) inChar);
 			}
-			System.out.println("");
-			
+			out.flush();
+			System.out.flush();
 			socket.close();
 			
 		} catch (IOException ioe) {
