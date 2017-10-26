@@ -5,15 +5,32 @@ import java.io.*;
 
 public class EchoClient {
 	public static void main(String [] args){
-		int inChar;
+		
 //		System.out.println("Enter in stuff, type 'Exit' to close.");
 		try {
-			//String hostname = args[0];
-			//Socket socket = new Socket (hostname, 6013); 
+			//send to server
+			int send;
+			int inChar;
 			
-			while((inChar = System.in.read()) != -1) {
-				System.out.println(inChar);
+			String hostname = "BEBOP";
+			Socket socket = new Socket (hostname, 6013);
+			//output stream
+			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
+			//input stream set up
+			InputStreamReader reader = new InputStreamReader(socket.getInputStream());
+			
+			while((send = System.in.read()) != -1){
+				//System.out.print((char) send);
+				out.write(send);
+				
+				out.flush();
+				
+				inChar = reader.read();
+				System.out.print((char) inChar);
 			}
+			System.out.println("");
+			
+			socket.close();
 			
 		} catch (IOException ioe) {
 			System.out.println("You gave us an error, nerd.");
